@@ -76,6 +76,8 @@ export function ApiKeysForm({ isProPlan }: { isProPlan: boolean }) {
                     return MODEL_DESIGNATIONS.FRONTIER;
                 case 'openrouter':
                     return MODEL_DESIGNATIONS.BALANCED;
+                case 'groq':
+                    return MODEL_DESIGNATIONS.FRONTIER
                 default:
                     return defaultModel;
             }

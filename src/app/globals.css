@@ -196,6 +196,19 @@ body {
     transform: scale(0.9) !important;
   }
 }
+mark {
+  background-color: #fff3cd; /* yellow highlight */
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+mark.weak {
+  background-color: #ffcccc; /* red */
+}
+
+mark.good {
+  background-color: #ccffcc; /* green */
+}
 /* 
 h1 {
   display: block;

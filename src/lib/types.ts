@@ -188,7 +188,8 @@ export type AIProviderOld = typeof AI_PROVIDERS[keyof typeof AI_PROVIDERS];
 export type ServiceName = 
 | 'openai'
 | 'anthropic'
-| 'openrouter';
+| 'openrouter'
+| 'groq';
 
 // Re-Export AI Model types from centralized location (except AIProvider to avoid conflict)
 export type { AIModel, ApiKey, AIConfig } from "./ai-models";

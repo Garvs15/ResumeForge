@@ -83,6 +83,15 @@ export const PROVIDERS: Partial<Record<ServiceName, AIProvider>> = {
         sdkInitializer: 'openrouter',
         unstable: false,
     },
+    groq: {
+        id: 'groq',
+        name: 'Groq',
+        apiLink: 'https://console.groq.com/keys',
+        logo: '/logos/groq.png',
+        envKey: 'GROQ_API_KEY',
+        sdkInitializer: 'groq',
+        unstable: false
+    }
 }
 
 // ========================
@@ -305,6 +314,41 @@ export const AI_MODELS: AIModel[] = [
             requiresPro: true
         }
     },
+    // GROQ DEFINITION
+    {
+    id: 'llama-3.1-8b-instant',
+    name: 'LLaMA 3.1 8B (Fast)',
+    provider: 'groq',
+    features: {
+        isFree: true,
+        isRecommended: true,
+        isUnstable: false,
+        maxTokens: 8000,
+        supportsVision: false,
+        supportsTools: false // 🚨 IMPORTANT
+    },
+    availability: {
+        requiresApiKey: true,
+        requiresPro: false
+    }
+},
+{
+    id: 'mixtral-8x7b-32768',
+    name: 'Mixtral 8x7B',
+    provider: 'groq',
+    features: {
+        isFree: false,
+        isRecommended: false,
+        isUnstable: false,
+        maxTokens: 32000,
+        supportsVision: false,
+        supportsTools: false
+    },
+    availability: {
+        requiresApiKey: true,
+        requiresPro: false
+    }
+}
 ]
 
 // ========================
@@ -339,6 +383,7 @@ const MODEL_ALIASES: Record<string, string> = {
 export const DEFAULT_MODELS = {
     PRO_USER: 'gpt-5.2',
     FREE_USER: 'deepseek/deepseek-v3.2:nitro'
+    // FREE_USER: 'llama-3.1-8b-instant' // ⚡ faster than deepseek
 } as const;
 
 // ========================
@@ -401,6 +446,11 @@ export function isModelAvailable(
     // Free Model allowance
     if (model.features.isFree) return true;
 
+    // ADD GROQ
+    if (model.provider === 'groq') {
+        return apiKeys.some(key => key.service === 'groq');
+    }
+
     // Check if this is an OpenRouter model (contains the forward slash)
     if (modelId.includes('/')) {
         return apiKeys.some(key => key.service === 'openrouter');
@@ -415,7 +465,7 @@ export function getDefaultModel(isPro: boolean): string {
 }
 
 export function groupModelsByProvider(): GroupedModels[] {
-    const providerOrder: ServiceName[] = ['anthropic', 'openai', 'openrouter'];
+    const providerOrder: ServiceName[] = ['anthropic', 'openai', 'openrouter', 'groq'];
     const grouped = new Map<ServiceName, AIModel[]>();
 
     // Group Models By Provider

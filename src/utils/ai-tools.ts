@@ -3,6 +3,7 @@ import { LanguageModel } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { createGroq } from "@ai-sdk/groq";
 
 // Re-export types for backward compatibility
 export type { ApiKey, AIConfig } from '@/lib/ai-models';
@@ -51,6 +52,14 @@ export function initializeAIClient(config?: AIConfig, isPro?: boolean, useThinki
         switch (provider.id) {
             case 'anthropic':
                 return createAnthropic({ apiKey: envKey })(resolvedModelId) as unknown as LanguageModel;
+
+            case 'groq':
+                const groqKey = process.env.GROQ_API_KEY;
+                if (!groqKey) {
+                    throw new Error('Groq API Key not found (GROQ_API_KEY)');
+                }
+
+                return createGroq({ apiKey: groqKey })(resolvedModelId) as unknown as LanguageModel;
 
             case 'openai':
                 // Check if this is actually an OpenRouter model (contains forward slash)
@@ -107,6 +116,14 @@ export function initializeAIClient(config?: AIConfig, isPro?: boolean, useThinki
     // Special case: free-tier models (e.g., GPT-5 Mini) skip user key requirement
     // Also allow GPT OSS models to use server-side OpenRouter key
     if (modelData.features.isFree || resolvedModelId.includes('/')) {
+        // GROQ INITIALIZATION
+        if (provider.id === 'groq') {
+            const groqKey = process.env.GROQ_API_KEY;
+            if (!groqKey) throw new Error('Groq API key not found (GROQ_API_KEY)');
+
+            return createGroq({ apiKey: groqKey })(resolvedModelId) as unknown as LanguageModel;
+        }
+
         // For OpenRouter models (with slash), use OpenRouter key
         if (resolvedModelId.includes('/')) {
             const openRouterKey = process.env.OPENROUTER_API_KEY;
@@ -144,6 +161,14 @@ export function initializeAIClient(config?: AIConfig, isPro?: boolean, useThinki
     switch (provider.id) {
         case 'anthropic':
             return createAnthropic({ apiKey: userApiKey })(resolvedModelId) as unknown as LanguageModel;
+
+        case 'groq':
+            const groqKey = process.env.GROQ_API_KEY;
+            if (!groqKey) {
+                    throw new Error('Groq API Key not found (GROQ_API_KEY)');
+                }
+
+        return createGroq({ apiKey: groqKey })(resolvedModelId) as unknown as LanguageModel;
 
         case 'openai':
             // Check if this is actually an OpenRouter model (contains forward slash)

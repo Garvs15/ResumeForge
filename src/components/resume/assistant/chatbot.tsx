@@ -92,6 +92,12 @@ export default function Chatbot({ resume, onResumeChange, job }: ChatbotProps) {
         customPrompts: Object.keys(customPrompts).length > 0 ? customPrompts : undefined,
     };
 
+    const minimalResume = useMemo(() => ({
+        work_expreience: resume.work_experience,
+        skills: resume.skills,
+        projects: resume.projects
+    }), [resume]);
+
     const { messages, error, append, isLoading, sendMessage, setMessages, addToolResult, stop } = useChatApi({
         resume,
         job,
@@ -100,16 +106,15 @@ export default function Chatbot({ resume, onResumeChange, job }: ChatbotProps) {
         setOriginalResume,
     });
 
+    console.log("MESSAGES:", messages);
+
     // Memoize the submit handler
     const handleSubmit = useCallback((message: string) => {
         setIsInitialLoading(true);
-        append({
-            content: message.replace(/\s+$/, ''),
-            role: 'user',
-        });
+        sendMessage(message.trim());
 
         setAccordionValue("chat");
-    }, [append]);
+    }, [sendMessage]);
 
     // Add delete handler
     const handleDelete = (id: string) => {
@@ -309,7 +314,11 @@ export default function Chatbot({ resume, onResumeChange, job }: ChatbotProps) {
                                                                         </button>
                                                                     </div>
                                                                 ) : (
-                                                                    <MemoizedMarkdown id={m.id} content={m.content} />
+                                                                    // <MemoizedMarkdown id={m.id} content={m.content} />
+                                                                    <div
+                                                                        className="prose text-sm"
+                                                                        dangerouslySetInnerHTML={{ __html: m.content }}
+                                                                    />
                                                                 )}
 
                                                                 {/* Message Actions */}

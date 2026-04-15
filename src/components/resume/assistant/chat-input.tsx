@@ -1,8 +1,9 @@
+"use client";
+
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { X, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import React, { useState, useCallback, useRef, useEffect } from "react";
 
 interface ChatInputProps {
   isLoading: boolean;
@@ -10,109 +11,118 @@ interface ChatInputProps {
   onStop: () => void;
 }
 
-export default function ChatInput({ 
-    isLoading, 
-    onSubmit,
-    onStop,
-  }: ChatInputProps) {
-    const [inputValue, setInputValue] = useState("");
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
+function ChatInput({ isLoading, onSubmit, onStop }: ChatInputProps) {
+  const [inputValue, setInputValue] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    const adjustTextareaHeight = useCallback(() => {
-      const textarea = textareaRef.current;
-      if (!textarea) return;
+  // 🔁 Track renders
+  const renderCount = useRef(0);
 
-      // Reset height to auto to get the correct scrollHeight
-      textarea.style.height = 'auto';
-      
-      // Calculate new height (capped at 6 lines ~ 144px)
-      const newHeight = Math.min(textarea.scrollHeight, 144);
-      textarea.style.height = `${newHeight}px`;
-    }, []);
 
-    // Adjust height whenever input value changes
-    useEffect(() => {
-      adjustTextareaHeight();
-    }, [inputValue, adjustTextareaHeight]);
+useEffect(() => {
+  const renderStart = performance.now();
 
-    const handleSubmit = useCallback((e: React.FormEvent) => {
-      e.preventDefault();
-      if (inputValue.trim()) {
-        const cleanedMessage = inputValue.replace(/\n+$/, '').trim();
-        onSubmit(cleanedMessage);
-        setInputValue("");
+  const duration = performance.now() - renderStart;
+  console.log("✅ Actual render time:", duration.toFixed(2), "ms");
+});
+
+  // 📏 Resize textarea (optimized)
+  const resizeTextarea = (el: HTMLTextAreaElement) => {
+    const start = performance.now();
+
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 144) + "px";
+
+    const duration = performance.now() - start;
+    if (duration > 5) {
+      console.warn("🐢 Slow resize:", duration.toFixed(2), "ms");
+    }
+  };
+
+  // ⌨️ Handle typing
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const start = performance.now();
+
+      const el = e.target;
+      const value = el.value;
+
+      // ⚠️ Reduce console spam
+      if (value.length % 10 === 0) {
+        console.log("⌨️ Typing:", value);
       }
-    }, [inputValue, onSubmit]);
 
-    return (
-      <form onSubmit={handleSubmit} className={cn(
-        "relative z-10",
-        "p-1 border-t border-purple-200/60",
-        "bg-white/40",
-        "backdrop-blur-sm",
-        "flex gap-1.5"
-      )}>
-        <Textarea
-          ref={textareaRef}
-          value={inputValue}
-          onChange={(event) => setInputValue(event.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              if (!e.shiftKey) {
-                e.preventDefault();
-                handleSubmit(e);
-              } else {
-                // Ensure height is adjusted after Shift+Enter
-                requestAnimationFrame(adjustTextareaHeight);
-              }
-            }
-          }}
-          placeholder="Ask me anything about your resume..."
-          rows={1}
-          className={cn(
-            "flex-1",
-            "bg-white/60",
-            "border-purple-200/60",
-            "focus:border-purple-300",
-            "focus:ring-2 focus:ring-purple-500/10",
-            "placeholder:text-purple-400",
-            "text-sm",
-            "min-h-[32px]",
-            "max-h-[144px]", // Approximately 6 lines
-            "resize-none",
-            "overflow-y-auto",
-            "px-2 py-1.5",
-            "transition-height duration-200",
-            "scrollbar-thin scrollbar-thumb-purple-200 scrollbar-track-transparent"
-          )}
-        />
-        <Button 
-          type={isLoading ? "button" : "submit"}
-          onClick={isLoading ? onStop : undefined}
-          size="sm"
-          className={cn(
-            isLoading ? [
-              "bg-gradient-to-br from-rose-500 to-pink-500",
-              "hover:from-rose-600 hover:to-pink-600",
-            ] : [
-              "bg-gradient-to-br from-purple-500 to-indigo-500",
-              "hover:from-purple-600 hover:to-indigo-600",
-            ],
-            "text-white",
-            "border-none",
-            "shadow-md shadow-purple-500/10",
-            "transition-all duration-300",
-            "hover:scale-105 hover:shadow-lg",
-            "hover:-translate-y-0.5",
-            "px-2 h-8"
-          )}
-        >
-          {isLoading ? (
-            <X className="h-3.5 w-3.5" />
-          ) : (
-            <Send className="h-3.5 w-3.5" />
-          )}
-        </Button>
-      </form>
-    );
+      setInputValue(value);
+
+      // Resize instantly
+      resizeTextarea(el);
+
+      const duration = performance.now() - start;
+      if (duration > 8) {
+        console.warn("🐢 Slow typing handler:", duration.toFixed(2), "ms");
+      }
+    },
+    []
+  );
+
+  // 🚀 Handle submit
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      const start = performance.now();
+
+      e.preventDefault();
+
+      const trimmed = inputValue.trim();
+      if (!trimmed) return;
+
+      onSubmit(trimmed);
+      setInputValue("");
+
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+      }
+
+      const duration = performance.now() - start;
+      console.log("🚀 Submit time:", duration.toFixed(2), "ms");
+    },
+    [inputValue, onSubmit]
+  );
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="relative z-10 p-1 border-t border-purple-200/60 bg-white/40 backdrop-blur-sm flex gap-1.5"
+    >
+      <Textarea
+        ref={textareaRef}
+        value={inputValue}
+        onChange={handleChange}
+        rows={1}
+        placeholder="Ask me anything about your resume..."
+        className="flex-1 bg-white/60 border-purple-200/60 focus:border-purple-300 focus:ring-2 focus:ring-purple-500/10 text-sm min-h-[32px] max-h-[144px] resize-none overflow-y-auto px-2 py-1.5"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e);
+          }
+        }}
+      />
+
+      <Button
+        type={isLoading ? "button" : "submit"}
+        onClick={isLoading ? onStop : undefined}
+        size="sm"
+        className="text-white px-2 h-8"
+      >
+        {isLoading ? (
+          <X className="h-3.5 w-3.5" />
+        ) : (
+          <Send className="h-3.5 w-3.5" />
+        )}
+      </Button>
+    </form>
+  );
 }
+
+// 🔥 Prevent unnecessary re-renders
+export default React.memo(ChatInput);

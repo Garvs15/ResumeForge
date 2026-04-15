@@ -183,21 +183,21 @@ export async function chatAction({
 
       {
         role: "user",
-//         content: `USER QUERY:
-//         ${userMessage} || 
+        content: `USER QUERY:
+        ${userMessage} || 
 
-// RESUME:
-// ${JSON.stringify(resume, null, 2)}`
+RESUME:
+${JSON.stringify(resume, null, 2)}`
 
-content: userMessage || "",
+// content: userMessage || "",
 
       },
     ],
     tools: {
       // type: "tool",
       // ragResume: ragResumeTool,
-      // getResume: getResumeTool,
-      // modifyWholeResume: modifyResumeTool,
+      getResume: getResumeTool,
+      modifyWholeResume: modifyResumeTool,
     },
   });
 

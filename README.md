@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 ResumeForge — AI-Powered Resume Builder
 
-## Getting Started
+Create ATS-optimized resumes in minutes with AI-driven insights, real-time suggestions, and role-specific optimization.
 
-First, run the development server:
+---
+
+## ✨ Features
+
+- 🤖 **AI Resume Analyzer**
+  - Get instant feedback on your resume
+  - AI rewrites bullet points with impact + metrics
+  - Highlights strong vs weak sections
+
+- 🎯 **ATS Optimization**
+  - Keyword suggestions based on job roles
+  - Improves resume ranking for recruiters
+
+- 📄 **Smart Resume Builder**
+  - Structured sections (Experience, Projects, Skills)
+  - Clean and modern UI
+
+- 🔄 **Live Editing**
+  - Real-time updates while editing
+  - Seamless user experience
+
+- 🖼️ **Profile Image Upload**
+  - Secure storage using Supabase
+
+- ⚡ **Fast & Responsive UI**
+  - Built with modern frontend tools
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- Next.js (App Router)
+- React
+- Tailwind CSS
+- Framer Motion (animations)
+
+### Backend / Services
+- Supabase (Auth, Database, Storage)
+- AI SDK (LLM integration)
+
+### Testing
+- Vitest (unit testing)
+- React Testing Library
+- Playwright (E2E testing)
+
+---
+
+## 📂 Project Structure
+src/
+├── app/
+├── components/
+├── lib/
+├── utils/
+├── hooks/
+├── tests/
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
 
 ```bash
+git clone https://github.com/your-username/resumeforge.git
+cd resumeforge
+
+2. Install dependencies
+npm install
+3. Setup environment variables
+
+Create a .env.local file:
+
+NEXT_PUBLIC_SUPABASE_URL=your_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+OPENAI_API_KEY=your_key
+
+4. Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App will run on:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
+🧪 Testing
+Run unit tests
+npm run test
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run all tests
+npm run test:run
+Run E2E tests
+npx playwright test
 
-## Learn More
+🔐 Authentication
+Supabase Auth is used for:
+User login/signup
+Secure profile management
 
-To learn more about Next.js, take a look at the following resources:
+📦 Storage
+Supabase Storage used for:
+Profile image uploads
+Public URL access
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🚀 Deployment
+Recommended: Vercel
+npm run build
+npm start
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📈 Future Improvements
+AI resume scoring system
+Resume version comparison
+Export to PDF (custom templates)
+Job-specific resume tailoring
+Collaboration features
+🤝 Contributing
 
-## Deploy on Vercel
+Pull requests are welcome. For major changes, please open an issue first.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+📧 Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Garv Singla
+📩 garvs0041@gmail.com

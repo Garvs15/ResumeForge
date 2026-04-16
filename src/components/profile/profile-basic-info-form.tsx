@@ -4,15 +4,46 @@ import { Profile } from "@/lib/types";
 import { Card, CardContent } from "../ui/card";
 import { Github, Globe, Linkedin, Mail, MapPin, Phone, User } from "lucide-react";
 import { Input } from "../ui/input";
+import Image from "next/image";
 
 interface ProfileBasicInfoFormProps {
     profile: Profile,
     onChange: (field: keyof Profile, value: string) => void;
+    onImageUpload: (file: File) => void;
 }
 
-export function ProfileBasicInfoForm({ profile, onChange }: ProfileBasicInfoFormProps) {
+export function ProfileBasicInfoForm({ profile, onChange, onImageUpload }: ProfileBasicInfoFormProps) {
     return (
         <div className="space-y-6">
+
+            <div className="flex items-center gap-4">
+                {/* Preview */}
+                <div className="h-20 w-20 rounded-full overflow-hidden border">
+                    {profile.profile_image ? (
+                        <Image 
+                        src={profile.profile_image}
+                        alt="Profile"
+                        width={80}
+                        height={80}
+                        className="rounded-full object-cover"
+                        />
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                            <User className="w-6 h-6 text-gray-600" />
+                        </div>
+                    )}
+                </div>
+
+                {/* Upload */}
+                <input type="file"
+                accept="image/*"
+                onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) onImageUpload(file);  
+                }}
+                />
+            </div>
+
             {/* Personal Details */}
             <Card className="relative group bg-gradient-to-r from-teal-500/5 via-teal-500/10 to-cyan-500/5 backdrop-blur-md border-2 border-teal-500/30 hover:border-teal-500/40 hover:shadow-lg transition-all duration-300 shadow-sm">
                 <CardContent className="p-6">
@@ -149,7 +180,7 @@ export function ProfileBasicInfoForm({ profile, onChange }: ProfileBasicInfoForm
                     placeholder:text-gray-400"
                                     placeholder="https://your-website.com"
                                 />
-                                <div className="bsolute -top-2.5 left-2 px-1 bg-white/80 text-[10px] font-medium text-teal-700">
+                                <div className="absolute -top-2.5 left-2 px-1 bg-white/80 text-[10px] font-medium text-teal-700">
                                     WEBSITE
                                 </div>
                             </div>

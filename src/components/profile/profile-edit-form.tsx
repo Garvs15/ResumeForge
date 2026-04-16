@@ -40,6 +40,7 @@ import { ProfileProjectsForm } from "./profile-projects-form";
 import { ProfileEducationForm } from "./profile-education-form";
 import { ProfileSkillsForm } from "./profile-skills-form";
 import { ProfileEditorHeader } from "./profile-editor-header";
+import { uploadProfileImage } from "@/utils/supabase/client";
 
 interface ProfileEditFormProps {
     profile: Profile;
@@ -94,6 +95,27 @@ export function ProfileEditForm({ profile: initialProfile }: ProfileEditFormProp
             setIsSubmitting(false);
         }
     };
+
+    const handleImageUpload = async (file: File) => {
+    try {
+        const url = await uploadProfileImage(file, profile.user_id);
+
+        const updatedProfile = {
+            ...profile,
+            profile_image: url,
+        };
+
+        // Update state
+        setProfile(updatedProfile);
+
+        // Save to DB
+        await updateProfile(updatedProfile);
+
+        console.log("Saved to DB: ", url);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
     const handleReset = async () => {
         try {
@@ -799,6 +821,7 @@ export function ProfileEditForm({ profile: initialProfile }: ProfileEditFormProp
                                                             updateField(field as keyof Profile, value);
                                                         }
                                                     }}
+                                                    onImageUpload={handleImageUpload}
                                                 />
                                             </div>
                                         </Card>

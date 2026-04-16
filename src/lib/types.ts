@@ -147,6 +147,7 @@ export interface DocumentSettings {
 export interface Profile {
     id: string;
     user_id: string;
+    profile_image: string | null;
     first_name: string | null;
     last_name: string | null;
     email: string | null;

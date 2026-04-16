@@ -17,3 +17,4 @@ export async function getServiceClient() {
     const supabase = await createServiceClient();
     return { supabase };
 }
+

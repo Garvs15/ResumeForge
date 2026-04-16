@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Briefcase, User, GraduationCap, Code, Pencil } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 interface ProfileRowProps {
     profile: Profile;
@@ -27,7 +28,18 @@ export function ProfileRow({ profile }: ProfileRowProps) {
                                 {/* Enhanced Avatar Circle */}
                                 <div className="shrink-0 h-10 w-10 rounded-full bg-gradient-to-br from-teal-500 to-cyan-500 p-[2px] shadow-xl group-hover:shadow-teal-500/25 transition-all duration-500">
                                     <div className="h-full w-full rounded-full bg-gradient-to-br from-white to-white/90 p-1.5 flex items-center justify-center">
-                                        <User className="h-5 w-5 text-teal-600/80" />
+                                        {/* <User className="h-5 w-5 text-teal-600/80" /> */}
+                                        {profile.profile_image ? (
+                                            <Image
+                                                src={profile.profile_image}
+                                                alt="Profile"
+                                                width={40}
+                                                height={40}
+                                                className="object-cover w-full h-full"
+                                            />
+                                        ) : (
+                                            <User className="h-5 w-5 text-teal-600/80" />
+                                        )}
                                     </div>
                                 </div>
 

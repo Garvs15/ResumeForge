@@ -87,10 +87,10 @@ export function Hero() {
 
                         {/* Text Content with Testimonials  */}
                         <div className="flex-1">
-                            <h3 className="font-semibold text-base">Join Our growing community</h3>
-                            <p className="text-sm text-muted-foreground">Trusted by over 500 tech professionals</p>
+                            <h3 className="font-semibold text-base">Start building better resumes today</h3>
+                            <p className="text-sm text-muted-foreground">Part of a growing ecosystem of tech talent</p>
 
-                            <p className="text-xs italic mt-1 text-indigo-600">&ldquo;Landed 3 interviews in my first week using ResumeForge&rdquo; - Garv</p>
+                            {/* <p className="text-xs italic mt-1 text-indigo-600">&ldquo;Landed 3 interviews in my first week using ResumeForge&rdquo; - Garv</p> */}
 
                             {/* ShadCn Avatar Stack */}
                             <div className="flex items-center mt-3">

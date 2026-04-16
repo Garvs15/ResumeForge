@@ -124,7 +124,7 @@ export async function chatAction({
 
   /* --------- Stream AI Response --------- */
   const result = await streamText({
-    toolChoice: "required",
+    toolChoice: "auto",
     model: initializeAIClient(config),
     // For Normal Chatbot
     messages: [

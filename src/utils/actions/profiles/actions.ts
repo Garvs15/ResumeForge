@@ -8,6 +8,9 @@ export async function updateProfile(data: Partial<Profile>): Promise<Profile> {
     const supabase = await createClient();
     const { data: { user }, error: userError } = await supabase.auth.getUser();
 
+    console.log("🔍 Auth user:", user);
+    console.log("📦 Incoming data:", data);
+
     if (userError || !user) {
         throw new Error('User not authenticated');
     }
@@ -22,6 +25,8 @@ export async function updateProfile(data: Partial<Profile>): Promise<Profile> {
     if (error) {
         throw new Error(`Failed to update profile: ${error.message}`);
     }
+
+    console.log("Updated Profile: ", profile);
 
     //   Revalidate all routes that might display the profile data
     revalidatePath('/', 'layout');

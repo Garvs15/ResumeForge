@@ -40,7 +40,7 @@ async function reserveWebhookEvent(
 
     if (!existingEvent) {
         const { error: insertError } = await supabase
-            .from('stripe_webhooks_events')
+            .from('stripe_webhook_events')
             .insert({
                 event_id: event.id,
                 event_type: event.type
@@ -137,7 +137,7 @@ async function handleSubscriptionChange(
     }
 }
 
-async function POST(req: Request) {
+export async function POST(req: Request) {
     try {
         console.log('🌐 Incoming Webhook Request:', {
             method: req.method,
@@ -388,8 +388,8 @@ async function POST(req: Request) {
     }
 }
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-}
+// export const config = {
+//     api: {
+//         bodyParser: false,
+//     },
+// }

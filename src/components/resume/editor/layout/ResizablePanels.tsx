@@ -39,7 +39,7 @@ export function ResizablePanels({
     return (
         <div ref={containerRef} className="h-full relative">
             <ResizablePanelGroup
-                direction="horizontal"
+                orientation="horizontal"
                 className={cn(
                     "relative h-full rounded-lg",
                     isBaseResume ? "border-purple-200/40"
@@ -67,7 +67,7 @@ export function ResizablePanels({
                     minSize={30}
                     maxSize={70}
                     onResize={(size) => {
-                        lastPercentageRef.current = size; // Store current percentage
+                        lastPercentageRef.current = typeof size === 'number' ? size : parseFloat(size.toString()); // Store current percentage
                         updatePixelWidth();
                     }}
                     className={cn(

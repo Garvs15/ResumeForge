@@ -43,7 +43,7 @@ export function LoginForm() {
         setFieldTouched
     } = useAuth();
 
-    async function handleSubmit(e: React.FocusEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setError(undefined);
 

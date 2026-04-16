@@ -141,7 +141,7 @@ export function ProfileEditForm({ profile: initialProfile }: ProfileEditFormProp
             };
 
             // Update the local state
-            setProfile(resetProfile);
+            // setProfile(resetProfile);
 
             // Save to database
             await updateProfile(resetProfile);

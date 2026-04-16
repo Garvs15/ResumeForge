@@ -93,7 +93,7 @@ export const BasicInfoForm = memo(function BasicInfoFormComponent({
         // Copy each field if it exists in the profile
         fieldsToFill.forEach((field) => {
             if (profile[field]) {
-                updateField(field, profile[field] as string);
+                updateField(field as keyof typeof resume, profile[field] as string);
             }
         });
     };

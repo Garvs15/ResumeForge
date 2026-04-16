@@ -5,7 +5,7 @@ export default function ResumeEditorLoading() {
     return (
         <div className="h-[calc(100vh-4rem)] overflow-hidden relative">
             <div className="max-w-[2000px] mx-auto h-[calc(100vh-120px)] pt-4 px-6 md:px-8 lg:px-12">
-                <ResizablePanelGroup direction="horizontal" className="h-full rounded-lg border-purple-200/40">
+                <ResizablePanelGroup orientation="horizontal" className="h-full rounded-lg border-purple-200/40">
                     {/* Editor Panel */}
                     <ResizablePanel defaultSize={40}>
                         <div className="flex flex-col h-full mr-4">

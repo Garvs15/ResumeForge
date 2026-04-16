@@ -27,11 +27,11 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  // icons: {
-  //   icon: "/favicon.ico",
-  //   shortcut: "/favicon-16x16.png",
-  //   apple: "/apple-touch-icon.png",
-  // }
+  icons: {
+    icon: "/logo.jpg",
+    // shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  }
 };
 
 export default async function RootLayout({

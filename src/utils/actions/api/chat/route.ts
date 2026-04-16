@@ -158,10 +158,10 @@ export async function chatAction({
 
         HIGHLIGHT RULES:
         - Wrap weak/improvable parts using:
-          <mark class="weak">...</mark>
+        <mark class="weak">...</mark>
 
         - Wrap strong/impactful parts using:
-          <mark class="good">...</mark>
+        <mark class="good">...</mark>
 
         - Return response in HTML (NOT markdown)
         `,

@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { resume, job, userMessage, config } = body;
 
-    const conn = await amqp.connect("amqp://admin:admin@localhost:5672");
+    const conn = await amqp.connect(process.env.RABBITMQ_URL!);
     const channel = await conn.createChannel();
 
     const QUEUE = "chat_queue";

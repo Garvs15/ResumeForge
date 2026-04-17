@@ -175,7 +175,7 @@ const FeatureHighlights = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-50/30 to-transparent"></div>
 
                 <SplitContent
-                    imageSrc="/SS Chat.png"
+                    imageSrc="/SS Chat 3.png"
                     heading="AI-Powered Resume Assistant"
                     description="Get real-time feedback and suggestions from our advanced AI assistant. Optimize your resume content, improve your bullet points, and ensure your skills stand out to recruiters and ATS systems."
                     imageOnLeft={false}
@@ -204,7 +204,7 @@ const FeatureHighlights = () => {
                 />
 
                 <SplitContent
-                    imageSrc="/SS Score.png"
+                    imageSrc="/SS Score-2.png"
                     heading="Resume Performance Scoring"
                     description="Get detailed insights into your resume's effectiveness with our comprehensive scoring system. Track key metrics, identify areas for improvement, and optimize your resume to stand out to employers and ATS systems."
                     imageOnLeft={false}

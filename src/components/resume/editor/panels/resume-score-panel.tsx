@@ -255,7 +255,7 @@ export default function ResumeScorePanel({ resume, job }: ResumeScorePanelProps)
                             />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <h4 className="font-medium mb-1">Overall Score</h4>
+                            <h4 className="font-medium mb-1 text-center">Overall Score</h4>
                             <p className="text-sm text-muted-foreground">{scoreData.overallScore.reason}</p>
                         </div>
                     </div>
